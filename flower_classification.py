@@ -1,5 +1,4 @@
 from pandas import read_csv
-from pandas.plotting import scatter_matrix
 from matplotlib import pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score
@@ -13,6 +12,9 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
+from sklearn.preprocessing import LabelEncoder
+from mlxtend.plotting import plot_decision_regions
+
 
 url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/iris.csv"
 names= ['sepal-length', 'sepal-width', 'petal-length', 'petal-width', 'class']
@@ -42,7 +44,7 @@ models.append(('KNN', KNeighborsClassifier()))
 models.append(('CART', DecisionTreeClassifier()))
 models.append(('NB', GaussianNB()))
 models.append(('SVM', SVC(gamma='auto')))
-
+# print(models)
 
 results = []
 names = []
@@ -56,15 +58,53 @@ for name, model in models:
 # plt.boxplot(results, labels=names)
 # plt.title('Algorithm Comparison')
 # plt.show()
-
+# print(len(results[0]))
 
 model = SVC(gamma='auto')
 model.fit(X_train, Y_train)
-predictions = model.predict(X_validation)
+predictions = model.predict(X_train)
 
+print(accuracy_score(Y_train, predictions))
+print(confusion_matrix(Y_train, predictions))
+print(classification_report(Y_train, predictions))
 
-print(accuracy_score(Y_validation, predictions))
-print(confusion_matrix(Y_validation, predictions))
-print(classification_report(Y_validation, predictions))
+le = LabelEncoder()
+y_encoded = le.fit_transform(Y_train)
 
-#may be try to add graphs for each model
+# Create a figure with three subplots
+plt.figure(figsize=(20, 15))
+
+# Plot 1: Sepal length vs Sepal width
+plt.subplot(131)
+X_train_2d = X_train[:, [0, 1]].astype(float)
+model_2d = SVC(gamma='auto')
+model_2d.fit(X_train_2d, y_encoded)
+plot_decision_regions(X_train_2d, y_encoded, clf=model_2d, legend=2)
+plt.xlabel('Sepal Length')
+plt.ylabel('Sepal Width')
+plt.title('Decision Boundary: Sepal Features')
+
+# Plot 2: Petal length vs Petal width
+plt.subplot(132)
+X_train_2d = X_train[:, [2, 3]].astype(float)
+model_2d = SVC(gamma='auto')
+model_2d.fit(X_train_2d, y_encoded)
+plot_decision_regions(X_train_2d, y_encoded, clf=model_2d, legend=2)
+plt.xlabel('Petal Length')
+plt.ylabel('Petal Width')
+plt.title('Decision Boundary: Petal Features')
+
+# Plot 3: Sepal length vs Petal length
+plt.subplot(133)
+X_train_2d = X_train[:, [0, 2]].astype(float)
+model_2d = SVC(gamma='auto')
+model_2d.fit(X_train_2d, y_encoded)
+plot_decision_regions(X_train_2d, y_encoded, clf=model_2d, legend=2)
+plt.xlabel('Sepal Length')
+plt.ylabel('Petal Length')
+plt.title('Decision Boundary: Sepal Length vs Petal Length')
+
+plt.tight_layout()
+plt.show()
+
+# print(Y_train)
