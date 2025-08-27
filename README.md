@@ -1,6 +1,6 @@
 # 🌸 Iris Classification
 
-A simple ML project using the Iris dataset to compare classifiers and visualize decision boundaries.
+A simple ML project using the Iris dataset to compare classifiers and ##**visualize decision boundaries.**
 
 ## Features
 - Train & evaluate models: LR, LDA, KNN, CART, NB, SVM
