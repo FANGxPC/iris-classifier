@@ -1,5 +1,5 @@
-**Iris Classification with Machine Learning**
-*Simple* project to load the Iris dataset, try multiple classic ML models, and compare their accuracy using cross-validation.
+***Iris Classification with Machine Learning***
+Simple project to load the Iris dataset, try multiple classic ML models, and compare their accuracy using cross-validation.
 
 Loads Iris data and splits into training/validation sets
 
