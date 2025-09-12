@@ -71,10 +71,9 @@ print(classification_report(Y_train, predictions))
 le = LabelEncoder()
 y_encoded = le.fit_transform(Y_train)
 
-# Create a figure with three subplots
 plt.figure(figsize=(20, 15))
 
-# Plot 1: Sepal length vs Sepal width
+
 plt.subplot(131)
 X_train_2d = X_train[:, [0, 1]].astype(float)
 model_2d = SVC(gamma='auto')
@@ -84,7 +83,7 @@ plt.xlabel('Sepal Length')
 plt.ylabel('Sepal Width')
 plt.title('Decision Boundary: Sepal Features')
 
-# Plot 2: Petal length vs Petal width
+
 plt.subplot(132)
 X_train_2d = X_train[:, [2, 3]].astype(float)
 model_2d = SVC(gamma='auto')
@@ -94,7 +93,7 @@ plt.xlabel('Petal Length')
 plt.ylabel('Petal Width')
 plt.title('Decision Boundary: Petal Features')
 
-# Plot 3: Sepal length vs Petal length
+
 plt.subplot(133)
 X_train_2d = X_train[:, [0, 2]].astype(float)
 model_2d = SVC(gamma='auto')
