@@ -31,7 +31,8 @@ X = array[:, 0:4]
 y = array[:, 4]
 X_train, X_validation, Y_train, Y_validation = train_test_split(X, y, test_size=0.2, random_state=1)
 
-models=[]
+# Define candidate models.
+models = []
 models.append(('LR', LogisticRegression(solver='liblinear', multi_class='ovr')))
 models.append(('LDA', LinearDiscriminantAnalysis()))
 models.append(('KNN', KNeighborsClassifier()))
@@ -40,14 +41,15 @@ models.append(('NB', GaussianNB()))
 models.append(('SVM', SVC(gamma='auto')))
 # print(models)
 
+# Compare models with cross-validation.
 results = []
-names = []
-for name, model in models:
+model_names = []
+for model_name, model in models:
 	kfold = StratifiedKFold(n_splits=10, random_state=1, shuffle=True)
 	cv_results = cross_val_score(model, X_train, Y_train, cv=kfold, scoring='accuracy')
 	results.append(cv_results)
-	names.append(name)
-	print('%s: %f (%f)' % (name, cv_results.mean(), cv_results.std()))
+	model_names.append(model_name)
+	print('%s: %f (%f)' % (model_name, cv_results.mean(), cv_results.std()))
 
 # plt.boxplot(results, labels=names)
 # plt.title('Algorithm Comparison')
@@ -58,6 +60,7 @@ model = SVC(gamma='auto')
 model.fit(X_train, Y_train)
 predictions = model.predict(X_train)
 
+# Print training metrics for the selected model.
 print(accuracy_score(Y_train, predictions))
 print(confusion_matrix(Y_train, predictions))
 print(classification_report(Y_train, predictions))
