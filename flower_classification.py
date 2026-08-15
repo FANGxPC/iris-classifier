@@ -1,3 +1,4 @@
+# Data loading utilities.
 from pandas import read_csv
 from matplotlib import pyplot as plt
 from sklearn.model_selection import train_test_split
@@ -16,18 +17,19 @@ from sklearn.preprocessing import LabelEncoder
 from mlxtend.plotting import plot_decision_regions
 
 
-url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/iris.csv"
-names= ['sepal-length', 'sepal-width', 'petal-length', 'petal-width', 'class']
-dataset= read_csv(url , names= names)
+# Load dataset from source.
+DATASET_URL = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/iris.csv"
+FEATURE_NAMES = ['sepal-length', 'sepal-width', 'petal-length', 'petal-width', 'class']
+dataset = read_csv(DATASET_URL, names=FEATURE_NAMES)
 
 
 
-array= dataset.values
+array = dataset.values
 # print(array)
-X= array[: , 0:4]
+X = array[:, 0:4]
 # print(array)
-y= array[: , 4]
-X_train , X_validation  ,Y_train  , Y_validation = train_test_split( X , y , test_size=0.2 , random_state=1)
+y = array[:, 4]
+X_train, X_validation, Y_train, Y_validation = train_test_split(X, y, test_size=0.2, random_state=1)
 
 models=[]
 models.append(('LR', LogisticRegression(solver='liblinear', multi_class='ovr')))
