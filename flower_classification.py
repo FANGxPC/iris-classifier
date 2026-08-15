@@ -51,7 +51,7 @@ for model_name, model in models:
 	model_names.append(model_name)
 	print('%s: %f (%f)' % (model_name, cv_results.mean(), cv_results.std()))
 
-# plt.boxplot(results, labels=names)
+# plt.boxplot(results, labels=model_names)
 # plt.title('Algorithm Comparison')
 # plt.show()
 # print(len(results[0]))
@@ -68,34 +68,38 @@ print(classification_report(Y_train, predictions))
 le = LabelEncoder()
 y_encoded = le.fit_transform(Y_train)
 
+# Plot model boundaries for selected feature pairs.
 plt.figure(figsize=(20, 15))
 
 
+# Sepal length vs sepal width.
 plt.subplot(131)
-X_train_2d = X_train[:, [0, 1]].astype(float)
+x_train_2d = X_train[:, [0, 1]].astype(float)
 model_2d = SVC(gamma='auto')
-model_2d.fit(X_train_2d, y_encoded)
-plot_decision_regions(X_train_2d, y_encoded, clf=model_2d, legend=2)
+model_2d.fit(x_train_2d, y_encoded)
+plot_decision_regions(x_train_2d, y_encoded, clf=model_2d, legend=2)
 plt.xlabel('Sepal Length')
 plt.ylabel('Sepal Width')
 plt.title('Decision Boundary: Sepal Features')
 
 
+# Petal length vs petal width.
 plt.subplot(132)
-X_train_2d = X_train[:, [2, 3]].astype(float)
+x_train_2d = X_train[:, [2, 3]].astype(float)
 model_2d = SVC(gamma='auto')
-model_2d.fit(X_train_2d, y_encoded)
-plot_decision_regions(X_train_2d, y_encoded, clf=model_2d, legend=2)
+model_2d.fit(x_train_2d, y_encoded)
+plot_decision_regions(x_train_2d, y_encoded, clf=model_2d, legend=2)
 plt.xlabel('Petal Length')
 plt.ylabel('Petal Width')
 plt.title('Decision Boundary: Petal Features')
 
 
+# Sepal length vs petal length.
 plt.subplot(133)
-X_train_2d = X_train[:, [0, 2]].astype(float)
+x_train_2d = X_train[:, [0, 2]].astype(float)
 model_2d = SVC(gamma='auto')
-model_2d.fit(X_train_2d, y_encoded)
-plot_decision_regions(X_train_2d, y_encoded, clf=model_2d, legend=2)
+model_2d.fit(x_train_2d, y_encoded)
+plot_decision_regions(x_train_2d, y_encoded, clf=model_2d, legend=2)
 plt.xlabel('Sepal Length')
 plt.ylabel('Petal Length')
 plt.title('Decision Boundary: Sepal Length vs Petal Length')
